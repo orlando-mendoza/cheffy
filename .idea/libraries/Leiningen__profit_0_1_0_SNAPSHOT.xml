@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Leiningen: profit:0.1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/profit/profit/0.1.0-SNAPSHOT/profit-0.1.0-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
