@@ -15,6 +15,7 @@
 
   :main ^:skip-aot cheffy.server
   :target-path "target/%s"
+  :min-lein-version "2.0.0"
   :profiles {:uberjar {:aot :all}
              :dev {:source-paths ["dev/src"]
                    :resource-paths ["dev/resources"]
