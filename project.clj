@@ -3,6 +3,7 @@
   :url "https://api.learnreitit.com"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
             :url "https://www.eclipse.org/legal/epl-2.0/"}
+  :min-lein-version "2.0.0"
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [ring "1.8.1"]
                  [integrant "0.8.0"]
@@ -15,7 +16,6 @@
 
   :main ^:skip-aot cheffy.server
   :target-path "target/%s"
-  :min-lein-version "2.0.0"
   :profiles {:uberjar {:aot :all}
              :dev {:source-paths ["dev/src"]
                    :resource-paths ["dev/resources"]
