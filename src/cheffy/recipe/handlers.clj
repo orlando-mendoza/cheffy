@@ -46,7 +46,7 @@
         (response/not-found {:recipe-id recipe-id})))))
 
 (defn delete-recipe!
-  [bd]
+  [db]
   (fn [request]
     (let [recipe-id "a3dde84c-4a33-45aa-b0f3-4bf9ac997680"
           deleted! (recipe-db/delete-recipe! db {:recipe-id recipe-id})]
