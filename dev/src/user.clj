@@ -84,4 +84,6 @@
   (halt)
   (reset)
 
+  (set! *print-namespace-maps* false)
+
   ,)
