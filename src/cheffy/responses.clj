@@ -1,9 +1,9 @@
 (ns cheffy.responses
  (:require [spec-tools.data-spec :as ds]))
 
-(def base-url "https://ancient-thicket-19264.herokuapp.com/")
+;; (def base-url "https://ancient-thicket-19264.herokuapp.com")
 
-#_ (def base-url "http://localhost:3000")
+(def base-url "http://localhost:3000")
 
 (def step
   {:step/step_id     string?
@@ -33,5 +33,3 @@
 (def recipes
   {:public          [recipe]
    (ds/opt :drafts) [recipe]})
-
-

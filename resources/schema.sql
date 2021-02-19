@@ -64,3 +64,17 @@ create table recipe_favorite (
     recipe_id text not null references recipe(recipe_id) on delete cascade,
     uid text not null references account(uid) on delete cascade
 );
+
+-- Just a reminder of the SQL command to create an index
+-- CREATE INDEX products_product_id_idx
+--       ON manufacturing.products USING btree
+--       (product_id ASC NULLS LAST);
+
+-- Adding a constraint to a field
+-- ALTER TABLE manufacturing.categories
+--    ADD CONSTRAINT categories_market_check CHECK (market = 'domestic' OR market = 'industrial');
+
+-- Adding a constraint check to a data field
+-- ALTER TABLE human_resources.employees
+--    ADD CONSTRAINT employees_hired_date_check CHECK (hire_data > '2020-01-01')
+--    NOT VALID;

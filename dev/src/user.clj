@@ -1,14 +1,14 @@
 (ns user
   (:require
-    [integrant.repl :as ig-repl]
-    [integrant.core :as ig]
-    [integrant.repl.state :as state]
-    [cheffy.server]
-    [next.jdbc :as jdbc]
-    [next.jdbc.sql :as sql]))
+   [integrant.repl :as ig-repl]
+   [integrant.core :as ig]
+   [integrant.repl.state :as state]
+   [cheffy.server]
+   [next.jdbc :as jdbc]
+   [next.jdbc.sql :as sql]))
 
 (ig-repl/set-prep!
-  (fn [] (-> "resources/config.edn" slurp ig/read-string)))
+ (fn [] (-> "resources/config.edn" slurp ig/read-string)))
 
 (def go ig-repl/go)
 (def halt ig-repl/halt)
@@ -20,14 +20,14 @@
 
 #_(def router
     (reitit.core/router
-      ["/v1/recipes/:recipe-id"
-       {:coercion   reitit.coercion.spec/coercion
-        :parameters {:path {:recipe-id int?}}}]
-      {:compile reitit.coercion/compile-request-coercers}))
+     ["/v1/recipes/:recipe-id"
+      {:coercion   reitit.coercion.spec/coercion
+       :parameters {:path {:recipe-id int?}}}]
+     {:compile reitit.coercion/compile-request-coercers}))
 
 (comment
   (reitit.coercion/coerce!
-    (reitit.core/match-by-path router "/v1/recipes/1234"))
+   (reitit.core/match-by-path router "/v1/recipes/1234"))
 
 
   (app {:request-method :get
@@ -45,14 +45,13 @@
       :body
       slurp)
 
-  (-> {:request-method :post
-       :uri            "/v1/recipes"
-       :body-params    {:name      "Tres Leches"
-                        :prep-time 49
-                        :img       "tres-leches-image-url"}}
-      app
+  (-> (app {:request-method :post
+            :uri            "/v1/recipes"
+            :body-params    {:name      "Lasagna"
+                             :prep-time 59
+                             :img       "image-url"}})
       :body
-      slurp)
+      (slurp))
 
 
 
@@ -66,9 +65,9 @@
   (time (sql/find-by-keys db :recipe {:public true}))
 
   (time
-    (with-open [conn (jdbc/get-connection db)]
-      {:public (sql/find-by-keys conn :recipe {:public true})
-       :drafts (sql/find-by-keys conn :recipe {:public false :uid "auth0|5ef440986e8fbb001355fd9c"})}))
+   (with-open [conn (jdbc/get-connection db)]
+     {:public (sql/find-by-keys conn :recipe {:public true})
+      :drafts (sql/find-by-keys conn :recipe {:public false :uid "auth0|5ef440986e8fbb001355fd9c"})}))
 
   (with-open [conn (jdbc/get-connection db)]
     (let [recipe-id "a3dde84c-4a33-45aa-b0f3-4bf9ac997680"
@@ -77,8 +76,8 @@
           ingredients (sql/find-by-keys conn :ingredient {:recipe_id recipe-id})]
       (when (seq recipe)
         (assoc recipe
-          :recipe/steps steps
-          :recipe/ingredients ingredients))))
+               :recipe/steps steps
+               :recipe/ingredients ingredients))))
 
   (go)
   (halt)

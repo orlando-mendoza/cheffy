@@ -3,7 +3,8 @@
             [ring.adapter.jetty :as jetty]
             [integrant.core :as ig]
             [environ.core :refer [env]]
-            [cheffy.router :as router]))
+            [cheffy.router :as router]
+            [next.jdbc :as jdbc]))
 
 (defn app
   [env]
@@ -28,9 +29,9 @@
   (app config))
 
 (defmethod ig/init-key :db/postgres
-  [_ config]
+  [_ {:keys [jdbc-url]}]
   (println "\nConfigured db")
-  (:jdbc-url config))
+  (jdbc/with-options jdbc-url jdbc/snake-kebab-opts))
 
 (defmethod ig/halt-key! :server/jetty
   [_ jetty]

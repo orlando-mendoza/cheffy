@@ -8,7 +8,9 @@
     [reitit.ring.middleware.muuntaja :as middleware.muuntaja]
     [reitit.coercion.spec :as coercion-spec]
     [reitit.ring.coercion :as coercion]
-    [reitit.ring.middleware.exception :as exception]))
+    [reitit.ring.middleware.exception :as exception]
+    [reitit.dev.pretty :as pretty]
+    [reitit.ring.spec :as rs]))
 
 (def swagger-docs
   ["/swagger.json"
@@ -21,13 +23,15 @@
      :handler (swagger/create-swagger-handler)}}])
 
 (def router-config
-  {:data {:coercion   coercion-spec/coercion
-          :muuntaja   muuntaja/instance
-          :middleware [swagger/swagger-feature
-                       middleware.muuntaja/format-middleware
-                       exception/exception-middleware
-                       coercion/coerce-request-middleware
-                       coercion/coerce-response-middleware]}})
+  {:validate  rs/validate
+   :exception pretty/exception
+   :data      {:coercion   coercion-spec/coercion
+               :muuntaja   muuntaja/instance
+               :middleware [swagger/swagger-feature
+                            middleware.muuntaja/format-middleware
+                            ;exception/exception-middleware
+                            coercion/coerce-request-middleware
+                            coercion/coerce-response-middleware]}})
 
 (defn routes
   [env]
