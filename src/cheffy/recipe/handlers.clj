@@ -88,6 +88,37 @@
         (rr/status 204)
         (rr/bad-request {:step-id step-id})))))
 
+(defn create-ingredient!
+  [db]
+  (fn [request]
+    (let [recipe-id (-> request :parameters :path :recipe-id)
+          ingredient (-> request :parameters :body)
+          ingredient-id (str (UUID/randomUUID))]
+      (recipe-db/insert-ingredient! db (assoc ingredient
+                                        :recipe-id recipe-id
+                                        :ingredient-id ingredient-id))
+      (rr/created
+       (str responses/base-url "/recipes/" recipe-id)
+       {:ingredient-id ingredient-id}))))
+
+(defn update-ingredient!
+  [db]
+  (fn [request]
+    (let [ingredient (-> request :parameters :body)
+          update? (recipe-db/update-ingredient! db ingredient)]
+      (if update?
+        (rr/status 204)
+        (rr/bad-request (select-keys ingredient [:ingredient-id]))))))
+
+(defn delete-ingredient!
+  [db]
+  (fn [request]
+    (let [ingredient-id (-> request :parameters :body :ingredient-id)
+          deleted? (recipe-db/delete-ingredient! db {:ingredient-id ingredient-id} )]
+      (if deleted?
+        (rr/status 204)
+        (rr/bad-request {:ingredient-id ingredient-id})))))
+
 (defn favorite-recipe!
   [db]
   (fn [request]
